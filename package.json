@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/oliviaoddo/twitter-js#readme",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "lodash": "^4.17.4",
+    "nunjucks": "^3.0.1"
   }
 }
