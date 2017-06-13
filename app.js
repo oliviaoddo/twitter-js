@@ -1,11 +1,16 @@
 const express = require('express');
+var socketio = require('socket.io');
 const nunjucks = require('nunjucks');
 const routes = require('./routes');
 const bodyParser = require('body-parser')
 const app = express();
 
+
+const server = app.listen(3000);
+const io = socketio.listen(server);
+
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 
 app.set('view engine', 'html');
@@ -23,11 +28,8 @@ var locals = {
 		]
 };
 
-app.listen(3000, function(){
-    console.log('server listening');
-});
 
-app.use('/', routes);
+app.use('/', routes(io));
 
 app.use((req, res, next) => {
     console.log(req.method, req.path, res.statusCode);
