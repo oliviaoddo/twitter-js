@@ -1,9 +1,14 @@
+'use strict'
+
 const _ = require('lodash');
 
-const data = [{name: 'Joe Binder', content: 'Fullstack Academy is awesome! The instructors are just so funny. #fullstacklove #codedreams', age: 25}];
+const data = [];
+
+let id = 1;
 
 function add(name, content){
-	data.push({name: name, content: content});
+	data.push({id: id, name: name, content: content});
+  id++;
 }
 
 function list () {

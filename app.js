@@ -1,9 +1,15 @@
 const express = require('express');
 const nunjucks = require('nunjucks');
-
+const routes = require('./routes');
+const bodyParser = require('body-parser')
 const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+
 app.set('view engine', 'html');
+app.use(express.static('public'));
 app.engine('html', nunjucks.render);
 nunjucks.configure('views', {noCache: true});
 
@@ -21,22 +27,12 @@ app.listen(3000, function(){
     console.log('server listening');
 });
 
+app.use('/', routes);
 
 app.use((req, res, next) => {
     console.log(req.method, req.path, res.statusCode);
     next();
 });
-
-app.get('/', (req, res) => {
-    res.render('index', locals);
-    // res.end();
-});
-
-app.get('/news', (req, res) => {
-    res.send('<h1>News</h1');
-    // res.end();
-});
-
 
 nunjucks.render('index.html', locals, function(err, res){
 	if (err){

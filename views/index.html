@@ -1,7 +1,52 @@
-<h1>{{ title }}</h1>
-<p>This is a bare-bones template.</p>
-<ul>
-{% for person in people %}
-  <li>{{ person.name }}</li>
-{% endfor %}
-</ul>
+{% extends "layout.html" %}
+
+{% block content %}
+
+  {% if showForm %}
+    <form action="/tweets" method="POST">
+      <label for="name_field">Name:</label>
+      <!-- if index -->
+      {% if index %}
+      <input name="name" type="text" id="name_field" />
+      {% else %}
+      <!-- user route show this-->
+      <input name="name" value="{{username}}" />
+      {% endif%}
+
+      <label for="text_field">Text:</label>
+      <input name="text" type="text" id="text_field" style="width: 350px;" />
+
+      <input type="submit" value="Submit" />
+    </form>
+  {% endif %}
+
+  <div class="page-header">
+    <h1>Welcome to Twitter.js!</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <img src="https://pbs.twimg.com/profile_images/2450268678/olxp11gnt09no2y2wpsh_normal.jpeg"><br>
+      <b>Your Name</b><br>
+      100 followers
+    </div>
+    <div class="col-md-9">
+
+      <!-- display tweets here -->
+      {% for tweet in tweets %}
+      <div class="row tweets">
+        <div class ="col-md-2">
+          <img src="https://pbs.twimg.com/profile_images/2450268678/olxp11gnt09no2y2wpsh_normal.jpeg"><br>
+        </div>
+        <div class="col-md-10">
+          <a href="/users/{{tweet.name}}"><strong>{{tweet.name}}</strong></a>
+          <a href="/tweets/{{tweet.id}}"><p>{{tweet.content}}</p></a>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+{% endblock %}
+
+
